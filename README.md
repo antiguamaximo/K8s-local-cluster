@@ -23,7 +23,7 @@ A containerized Python automation tool deployed to a local Kubernetes cluster (k
 
 ### Create the local cluster
 ```
-k3d cluster crease resume-cluster
+k3d cluster create resume-cluster
 ```
 ### Apply the Deployment and Service
 ```
@@ -56,7 +56,7 @@ Docker image -> k3d cluster -> Deployment (2 replicas) -> Service (ClusterIP)[ro
 
 ## What I learned
 
-This project was my first real hands-on experience with Kubernetes, and it clarified a lot of concepts I'd only understood abstractly before. The biggest one: Kubernetes Deployments are built around long-running processes, not scripts that run once and exit. My original `check-specs-automation.py` does the latter, so applying it directly would have caused a never-ding restart loop (`CrashLoopBackOff`). Wrapping it in a small Flask app, without touching the original script, gave Kubernetes something it could actually keep alive and route traffic to.
+This project was my first real hands-on experience with Kubernetes, and it clarified a lot of concepts I'd only understood abstractly before. The biggest one: Kubernetes Deployments are built around long-running processes, not scripts that run once and exit. My original `check-specs-automation.py` does the latter, so applying it directly would have caused a never-ending restart loop (`CrashLoopBackOff`). Wrapping it in a small Flask app, without touching the original script, gave Kubernetes something it could actually keep alive and route traffic to.
 
 I also got to see self-healing in action directly, rather than just reading about it: deleting a running pod manually and watching Kubernetes immediately spin up a replacement to maintain the replica count was a genuinely useful "click" moment for understanding what a Deployment actually guarantees.
 
